@@ -1,13 +1,12 @@
 <script setup>
 import { onMounted } from 'vue';
-
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+onMounted(() => {
 
-  onMounted(() => {
   gsap.from("#inicio img", {
     opacity: 0,
     x: -50,
@@ -82,8 +81,47 @@ gsap.registerPlugin(ScrollTrigger);
     stagger: 0.15,
     ease: "back.out(1.7)",
   });
+
+  gsap.from("#contatos h2", {
+    scrollTrigger: {
+      trigger: "#contatos h2",
+      start: "top 80%",
+      toggleActions: "restart none none reverse",
+    },
+    opacity: 0,
+    y: 50,
+    duration: 1,
+    ease: "power3.out",
+  });
+
+  // Cards de contatos
+  gsap.from("#contatos li", {
+    scrollTrigger: {
+      trigger: "#contatos ul",
+      start: "top 85%",
+      toggleActions: "restart none none reverse",
+    },
+    opacity: 0,
+    y: 100,
+    duration: 0.8,
+    stagger: 0.2,
+    ease: "power2.out",
+  });
+  const contatos = document.querySelectorAll("#contatos li");
+
+  contatos.forEach((item) => {
+    item.addEventListener("mouseenter", () => {
+      gsap.to(item, { scale: 1.1, duration: 0.1, ease: "power2.out" });
+    });
+    item.addEventListener("mouseleave", () => {
+      gsap.to(item, { scale: 1, duration: 0.1, ease: "power2.out" });
+    });
+  });
+
+
 });
 </script>
+
 <template>
   <div class="body">
     <header>
@@ -92,7 +130,7 @@ gsap.registerPlugin(ScrollTrigger);
           <li><a href="#inicio">Inicio</a></li>
           <li><a href="#competencias">Competencias</a></li>
           <li><a href="#projetos">Projetos</a></li>
-          <li><a href="">Contatos</a></li>
+          <li><a href="#contatos">Contatos</a></li>
         </ul>
       </nav>
     </header>
@@ -144,48 +182,69 @@ gsap.registerPlugin(ScrollTrigger);
       </section>
       <section id="projetos">
         <div>
-        <h2>Meus <span>Projetos:</span></h2>
-        <ul>
-          <li class="project">
-            <img src="/img/rede.png" alt="Rede social">
-            <a class="link" href="https://rede-social-institucional.surge.sh/" target="_blank"
-              rel="noopener noreferrer">
-              <h3>Rede social institucional</h3>
-            </a>
-            <p>
-              <a class="git" href="https://github.com/Hackton2025/front-end" target="_blank" rel="noopener noreferrer">
-                <span class="mdi mdi-github"></span> Ver no GitHub
+          <h2>Meus <span>Projetos:</span></h2>
+          <ul>
+            <li class="project">
+              <img src="/img/rede.png" alt="Rede social">
+              <a class="link" href="https://rede-social-institucional.surge.sh/" target="_blank"
+                rel="noopener noreferrer">
+                <h3>Rede social institucional</h3>
               </a>
-            </p>
-          </li>
+              <p>
+                <a class="git" href="https://github.com/Hackton2025/front-end" target="_blank"
+                  rel="noopener noreferrer">
+                  <span class="mdi mdi-github"></span> Ver no GitHub
+                </a>
+              </p>
+            </li>
 
-          <li class="project">
-            <img src="/img/gues.png" alt="Advinhe a bandeira">
-            <a class="link" href="https://advinhe-a-bandeira.vercel.app/" target="_blank" rel="noopener noreferrer">
-              <h3>Advinhe a bandeira</h3>
-            </a>
-            <p>
-              <a class="git" href="https://github.com/LucasFontini1/LFR" target="_blank" rel="noopener noreferrer">
-                <span class="mdi mdi-github"></span> Ver no GitHub
+            <li class="project">
+              <img src="/img/gues.png" alt="Advinhe a bandeira">
+              <a class="link" href="https://advinhe-a-bandeira.vercel.app/" target="_blank" rel="noopener noreferrer">
+                <h3>Advinhe a bandeira</h3>
               </a>
-            </p>
-          </li>
+              <p>
+                <a class="git" href="https://github.com/LucasFontini1/Advinhe-a-bandeira" target="_blank"
+                  rel="noopener noreferrer">
+                  <span class="mdi mdi-github"></span> Ver no GitHub
+                </a>
+              </p>
+            </li>
 
-          <li class="project">
-            <img src="/img/lfr.png" alt="Games LFR">
-            <a class="link" href="https://lfr-smoky.vercel.app/" target="_blank" rel="noopener noreferrer">
-              <h3>Games LFR</h3>
-            </a>
-            <p>
-              <a class="git" href="https://github.com/LucasFontini1/Advinhe-a-bandeira" target="_blank" rel="noopener noreferrer">
-                <span class="mdi mdi-github"></span> Ver no GitHub
+            <li class="project">
+              <img src="/img/lfr.png" alt="Games LFR">
+              <a class="link" href="https://lfr-smoky.vercel.app/" target="_blank" rel="noopener noreferrer">
+                <h3>Games LFR</h3>
               </a>
-            </p>
-          </li>
-        </ul>
+              <p>
+                <a class="git" href="https://github.com/LucasFontini1/LFR" target="_blank" rel="noopener noreferrer">
+                  <span class="mdi mdi-github"></span> Ver no GitHub
+                </a>
+              </p>
+            </li>
+          </ul>
         </div>
       </section>
+      <section id="contatos">
+        <div>
+          <h2>Entrar em <span>Contato:</span></h2>
+          <ul>
+            <li><a href="mailto:lucasfontinidaluz@gmail.com?subject=Contato&body=Olá%20Lucas," target="_blank"
+                rel="noopener noreferrer"><img src="/img/Gmail_Icon.png" alt=""></a></li>
+            <li><a href="https://www.linkedin.com/in/lucas-fontini-da-luz-133a3b2b8" target="_blank"
+                rel="noopener noreferrer">
+                <img src="/img/LinkedIn_icon.svg.png" alt="">
+              </a>
 
+            </li>
+            <li><a href="https://github.com/LucasFontini1" target="_blank" rel="noopener noreferrer"><img
+                  src="/img/Octicons-mark-github.svg" alt=""></a></li>
+            <li><a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSdmfQO3KD5RqYeuTFEZVWiWdgL8T9t4UCFuzkQBVP50EQuiEg/viewform?usp=dialog"
+                target="_blank" rel="noopener noreferrer"><img src="/img/WhatsApp.svg.png" alt=""></a></li>
+          </ul>
+        </div>
+      </section>
 
     </main>
   </div>
@@ -307,21 +366,25 @@ header nav ul li a:hover::after {
   display: flex;
   margin-bottom: 1rem;
 }
-#projetos{
+
+#projetos {
   width: 100%;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-#projetos h2{
+
+#projetos h2 {
   text-align: center;
   font-size: 2rem;
 }
-#projetos h2 span{
+
+#projetos h2 span {
   color: #b4182d;
 }
-#projetos ul{
+
+#projetos ul {
   display: flex;
   width: 80%;
   justify-content: center;
@@ -330,54 +393,114 @@ header nav ul li a:hover::after {
   list-style: none;
   gap: 1rem;
 }
-#projetos ul li{
+
+#projetos ul li {
   width: 40%;
   position: relative;
   background-color: #242e49;
   padding: 1rem;
 }
-#projetos ul li img{
+
+#projetos ul li img {
   width: 100%;
 }
-#projetos ul li a.link{
+
+#projetos ul li a.link {
   text-decoration: none;
   color: #e4e6ff;
   display: flex;
   justify-content: center;
 }
-#projetos ul li a.link h3{
+
+#projetos ul li a.link h3 {
   position: relative;
   display: inline-block;
   text-align: center;
   font-size: 1.2rem;
 }
+
 #projetos ul li a.link h3::after {
   content: '';
   position: absolute;
-  bottom: 0; 
+  bottom: 0;
   left: 0;
   width: 0%;
   height: 2px;
   background-color: #b4182d;
   transition: width 0.3s ease;
 }
-#projetos ul li a.link h3:hover::after{
+
+#projetos ul li a.link h3:hover::after {
   width: 100%;
 }
-#projetos ul li p{
+
+#projetos ul li p {
   text-align: center;
   width: 100%;
 }
-#projetos ul li a.git{
+
+#projetos ul li a.git {
   display: block;
   text-decoration: none;
   color: #e4e6ff;
   width: 100%;
-    background-color: #181a2f;
-    padding: 5px 10px;margin-top: 1rem;
-    transition: background 0.3s ease;
+  background-color: #181a2f;
+  padding: 5px 10px;
+  margin-top: 1rem;
+  transition: background 0.3s ease;
 }
-#projetos ul li a.git:hover{
+
+#projetos ul li a.git:hover {
   background-color: #10111b;
+}
+
+#contatos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+#contatos h2 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+#contatos h2 span {
+  color: #b4182d;
+}
+
+#contatos ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 80%;
+  list-style: none;
+  margin: 0 auto;
+}
+
+#contatos ul li {
+  width: 30%;
+  background-color: #242e49;
+  padding: 1rem;
+  transition: transform 0.3s ease;
+}
+
+#contatos ul li a {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+#contatos ul li img {
+  width: 20vh;
+  height: 20vh;
+}
+
+#contatos ul li:hover {
+  transform: scale(1.1);
 }
 </style>
