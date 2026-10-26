@@ -252,6 +252,25 @@ onMounted(() => {
                 </a>
               </p>
             </li>
+            <li class="project">
+              <div class="momentum-preview" role="img" aria-label="Identidade visual do projeto Momentum">
+                <span class="momentum-mark">M</span>
+                <span class="momentum-name">Momentum</span>
+                <span class="momentum-caption">Hackathon IFC 2026</span>
+              </div>
+              <a class="link" href="https://momentum-sable-seven.vercel.app/" target="_blank" rel="noopener noreferrer">
+                <h3>Momentum</h3>
+              </a>
+              <p>Projeto web desenvolvido no Hackathon IFC 2026, com frontend e backend.</p>
+              <p>
+                <a class="git" href="https://github.com/Hackaton-2026-IFC/Frontend-Hackathon" target="_blank" rel="noopener noreferrer">
+                  <span class="mdi mdi-github"></span> Frontend no GitHub
+                </a>
+                <a class="git" href="https://github.com/Hackaton-2026-IFC/Backend-Hackathon" target="_blank" rel="noopener noreferrer">
+                  <span class="mdi mdi-github"></span> Backend no GitHub
+                </a>
+              </p>
+            </li>
           </ul>
         </div>
       </section>
@@ -698,4 +717,30 @@ main section {
     font-size: 1.2rem;
   }
 }
+.momentum-preview {
+  width: 100%;
+  height: 200px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #111827 0%, #2f3f68 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  text-align: center;
+  padding: 1rem;
+}
+.momentum-mark {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: #e4e6ff;
+  color: #202942;
+  font-size: 2rem;
+  font-weight: 800;
+}
+.momentum-name { font-size: 1.45rem; font-weight: 700; }
+.momentum-caption { font-size: 0.78rem; opacity: 0.85; }
 </style>
