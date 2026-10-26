@@ -1,5 +1,9 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
+
+const menuOpen = ref(false);
+const year = new Date().getFullYear();
+let gsapContext;
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
@@ -14,6 +18,8 @@ const leaveCard = (event) => {
 };
 
 onMounted(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  gsapContext = gsap.context(() => {
   gsap.from("#inicio img", {
     opacity: 0,
     x: -50,
@@ -136,17 +142,21 @@ onMounted(() => {
     stagger: 0.2,
     ease: "power2.out",
   });
+  });
 });
+onUnmounted(() => gsapContext?.revert());
 </script>
 
 <template>
   <div class="body">
     <header>
-      <nav>
-        <ul>
+      <button class="menu-toggle" type="button" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-controls="main-navigation" aria-label="Abrir ou fechar menu"><span class="mdi mdi-menu"></span> Menu</button>
+      <nav id="main-navigation" :class="{ 'menu-open': menuOpen }" aria-label="Navegação principal">
+        <ul @click="menuOpen = false">
           <li><a href="#inicio">Inicio</a></li>
           <li><a href="#sobre">Sobre</a></li>
-          <li><a href="#competencias">Competencias</a></li>
+          <li><a href="#competencias">Competências</a></li>
+          <li><a href="#formacao">Formação</a></li>
           <li><a href="#projetos">Projetos</a></li>
           <li><a href="#contatos">Contatos</a></li>
         </ul>
@@ -155,10 +165,8 @@ onMounted(() => {
     <main>
       <section id="inicio">
         <div class="inicio-container">
-          <img src="/img/my-image.png" alt="Lucas Fontini">
-          <h1>
-            Olá, me chamo<br>Lucas <span>Fontini</span> da Luz
-          </h1>
+          <img src="/img/my-image.png" alt="Foto de Lucas Fontini da Luz" width="300" height="300">
+          <div class="hero-copy"><p class="eyebrow">Olá, seja bem-vindo ao meu portfólio</p><h1>Lucas <span>Fontini</span> da Luz</h1><p class="hero-subtitle">Desenvolvedor Web · Frontend e Backend</p><p>Estudante de Informática para Internet no IFC Campus Araquari, apaixonado por criar soluções digitais.</p><div class="hero-actions"><a class="btn-primary" href="#projetos">Conhecer projetos <span aria-hidden="true">↗</span></a><a class="btn-outline" href="#contatos">Entrar em contato</a></div><p class="resume-note">Currículo em PDF: disponível mediante solicitação por e-mail.</p></div>
         </div>
       </section>
 
@@ -166,7 +174,7 @@ onMounted(() => {
         <div class="section-container">
           <h2>Sobre <span>mim:</span></h2>
           <p>
-            Sou estudante do IFC Araquari do curso de informática para internet, tenho 17 anos e sou apaixonado por tecnologia, principalmente desenvolvimento web. Estou sempre buscando aprender novas tecnologias e aprimorar minhas habilidades para me tornar um desenvolvedor cada vez melhor.
+            Sou estudante de Informática para Internet no Instituto Federal Catarinense (IFC), Campus Araquari. Tenho interesse em desenvolvimento frontend e backend, banco de dados e design de interfaces. Participo de projetos e hackathons para transformar o que aprendo em aplicações reais.
           </p>
         </div>
       </section>
@@ -174,56 +182,27 @@ onMounted(() => {
       <section id="competencias">
         <div class="section-container">
           <h2>Minhas <span>competencias:</span></h2>
-          <ul class="grid-competencias">
-            <li class="card">
-              <div class="img-wrapper"><img src="/img/Vue.png" alt="Vue logo"></div>
-              <h3>Vue.js</h3>
-            </li>
-            <li class="card">
-              <div class="img-wrapper"><img src="/img/HTML5_logo_and_wordmark.svg (1).png" alt="html logo"></div>
-              <h3>HTML</h3>
-            </li>
-            <li class="card">
-              <div class="img-wrapper"><img src="/img/CSS3_logo_and_wordmark.svg.png" alt="CSS logo"></div>
-              <h3>CSS</h3>
-            </li>
-            <li class="card">
-              <div class="img-wrapper"><img src="/img/JavaScript-logo.png" alt="JavaScript logo"></div>
-              <h3>JavaScript</h3>
-            </li>
-            <li class="card">
-              <div class="img-wrapper"><img src="/img/Figma-logo.svg.png" alt="Figma logo"></div>
-              <h3>Figma</h3>
-            </li>
-            <li class="card">
-              <div class="img-wrapper"><img style="color: white;" src="/img/Octicons-mark-github.svg" alt="GitHub logo"></div>
-              <h3>Github</h3>
-            </li>
-            <li class="card">
-              <div class="img-wrapper"><img src="/img/django.svg" alt="Django logo"></div>
-              <h3>Django</h3>
-            </li>
-            <li class="card">
-              <div class="img-wrapper"><img src="/img/pwa.svg" alt="PWA logo"></div>
-              <h3>PWA</h3>
-            </li>
-            <li class="card">
-              <div class="img-wrapper"><img src="/img/sql.png" alt="SQL logo"></div>
-              <h3>SQL</h3>
-            </li>
-          </ul>
+          <div class="skills-groups">
+            <div class="skill-group"><h3><span class="mdi mdi-monitor"></span> Frontend</h3><ul><li>Vue.js</li><li>JavaScript</li><li>HTML5</li><li>CSS3</li><li>PWA</li></ul></div>
+            <div class="skill-group"><h3><span class="mdi mdi-server"></span> Backend</h3><ul><li>Django</li><li>Desenvolvimento de APIs</li></ul></div>
+            <div class="skill-group"><h3><span class="mdi mdi-database"></span> Dados</h3><ul><li>SQL</li><li>Banco de dados</li></ul></div>
+            <div class="skill-group"><h3><span class="mdi mdi-tools"></span> Ferramentas e design</h3><ul><li>GitHub</li><li>Figma</li></ul></div>
+          </div>
         </div>
       </section>
 
+      <section id="formacao"><div class="section-container"><h2>Formação <span>& experiências:</span></h2><div class="journey-grid"><article class="journey-card"><span class="mdi mdi-school-outline" aria-hidden="true"></span><h3>Instituto Federal Catarinense</h3><p>Campus Araquari · Curso de Informática para Internet</p><span class="small-tag">Formação acadêmica</span></article><article class="journey-card"><span class="mdi mdi-trophy-outline" aria-hidden="true"></span><h3>Hackathons e projetos</h3><p>Participação em projetos de desenvolvimento web, incluindo o Momentum no Hackathon IFC 2026 e uma rede social institucional.</p><span class="small-tag">Aprendizado na prática</span></article></div></div></section>
+
       <section id="projetos">
         <div class="section-container">
-          <h2>Meus <span>Projetos:</span></h2>
+          <h2>Meus <span>Projetos:</span></h2><p class="section-lead">Aplicações e experiências desenvolvidas durante minha formação. Explore os sites e o código-fonte.</p>
           <ul class="grid-projetos">
             <li class="project">
-              <img src="/img/rede.png" alt="Rede social">
+              <img src="/img/rede.png" alt="Prévia da rede social institucional" loading="lazy">
               <a class="link" href="https://rede-social-institucional.surge.sh/" target="_blank" rel="noopener noreferrer">
                 <h3>Rede social institucional</h3>
               </a>
+              <p class="project-description">Projeto de rede social institucional desenvolvido em equipe.</p><div class="project-tags"><span>Frontend</span><span>Projeto em equipe</span></div>
               <p>
                 <a class="git" href="https://github.com/Hackton2025/front-end" target="_blank" rel="noopener noreferrer">
                   <span class="mdi mdi-github"></span> Ver no GitHub
@@ -231,10 +210,11 @@ onMounted(() => {
               </p>
             </li>
             <li class="project">
-              <img src="/img/robotica.png" alt="Robótica-IFC">
+              <img src="/img/robotica.png" alt="Prévia do projeto Robótica IFC" loading="lazy">
               <a class="link" href="https://robotica-ifc.vercel.app/" target="_blank" rel="noopener noreferrer">
-                <h3>Robótica-IFC(em desenvolvimento)</h3>
+                <h3>Robótica IFC <small>· em desenvolvimento</small></h3>
               </a>
+              <p class="project-description">Site do projeto Robótica IFC, em desenvolvimento.</p><div class="project-tags"><span>Web</span><span>Em desenvolvimento</span></div>
               <p>
                 <a class="git" href="https://github.com/Robotica-IFC/Documentacao-PI" target="_blank" rel="noopener noreferrer">
                   <span class="mdi mdi-github"></span> Ver no GitHub
@@ -242,10 +222,11 @@ onMounted(() => {
               </p>
             </li>
             <li class="project">
-              <img src="/img/lfr.png" alt="Games LFR">
+              <img src="/img/lfr.png" alt="Prévia do projeto Games LFR" loading="lazy">
               <a class="link" href="https://lfr-smoky.vercel.app/" target="_blank" rel="noopener noreferrer">
                 <h3>Games LFR</h3>
               </a>
+              <p class="project-description">Projeto Games LFR, disponível para conhecer online.</p><div class="project-tags"><span>Web</span><span>Projeto pessoal</span></div>
               <p>
                 <a class="git" href="https://github.com/LucasFontini1/LFR" target="_blank" rel="noopener noreferrer">
                   <span class="mdi mdi-github"></span> Ver no GitHub
@@ -261,7 +242,7 @@ onMounted(() => {
               <a class="link" href="https://momentum-sable-seven.vercel.app/" target="_blank" rel="noopener noreferrer">
                 <h3>Momentum</h3>
               </a>
-              <p>Projeto web desenvolvido no Hackathon IFC 2026, com frontend e backend.</p>
+              <p class="project-description">Aplicação web desenvolvida no Hackathon IFC 2026, com frontend e backend em repositórios separados.</p><div class="project-tags"><span>Hackathon 2026</span><span>Full Stack</span></div>
               <p>
                 <a class="git" href="https://github.com/Hackaton-2026-IFC/Frontend-Hackathon" target="_blank" rel="noopener noreferrer">
                   <span class="mdi mdi-github"></span> Frontend no GitHub
@@ -277,7 +258,7 @@ onMounted(() => {
 
       <section id="contatos">
         <div class="section-container">
-          <h2>Entrar em <span>Contato:</span></h2>
+          <h2>Entrar em <span>Contato:</span></h2><p class="section-lead">Tem uma oportunidade, ideia ou projeto? Vamos conversar!</p><a class="btn-primary contact-cta" href="mailto:lucasfontinidaluz@gmail.com?subject=Contato%20pelo%20portfolio">Enviar e-mail <span aria-hidden="true">↗</span></a>
           <ul class="grid-contatos">
             <li @mouseenter="hoverCard" @mouseleave="leaveCard">
               <a href="mailto:lucasfontinidaluz@gmail.com?subject=Contato&body=Olá%20Lucas," target="_blank" rel="noopener noreferrer">
@@ -303,6 +284,7 @@ onMounted(() => {
         </div>
       </section>
     </main>
+    <footer><p>© {{ year }} Lucas Fontini da Luz · Feito com Vue.js</p><a href="#inicio">Voltar ao topo ↑</a></footer>
   </div>
 </template>
 
@@ -743,4 +725,69 @@ main section {
 }
 .momentum-name { font-size: 1.45rem; font-weight: 700; }
 .momentum-caption { font-size: 0.78rem; opacity: 0.85; }
+
+/* Atualização de acessibilidade, identidade visual e responsividade */
+:global(*) { box-sizing: border-box; }
+:global(body) { margin: 0; }
+:global(:focus-visible) { outline: 3px solid #ffb4bf; outline-offset: 4px; }
+:global(html) { scroll-padding-top: 90px; }
+.body { line-height: 1.6; }
+header { min-height: 74px; height: auto; padding: 12px 1rem; }
+.menu-toggle { display: none; color: #e4e6ff; background: transparent; border: 1px solid #8991af; border-radius: 9px; padding: 8px 15px; cursor: pointer; font: inherit; }
+main section { min-height: auto; padding: clamp(5rem, 8vw, 8rem) 1.25rem; scroll-margin-top: 75px; }
+#inicio { min-height: calc(100svh - 75px); }
+#inicio .inicio-container { max-width: 1100px; }
+.hero-copy { max-width: 650px; }
+#inicio h1 { line-height: 1.12; margin: 0.3rem 0 1rem; }
+.eyebrow { letter-spacing: .07em; color: #ffb0be; font-weight: 700; }
+.hero-subtitle { font-size: clamp(1.15rem,2vw,1.5rem); font-weight: 700; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:.85rem; margin-top:1.5rem; }
+.btn-primary,.btn-outline { display:inline-flex; align-items:center; justify-content:center; gap:.7rem; text-decoration:none; padding:.85rem 1.3rem; border-radius:9px; font-weight:700; transition:transform .2s ease, background-color .2s ease; }
+.btn-primary { background:#b4182d; color:white; }
+.btn-outline { border:1px solid #b5bad8; color:#e4e6ff; }
+.btn-primary:hover,.btn-outline:hover { transform:translateY(-3px); }
+.resume-note { font-size:.85rem; opacity:.78; margin-top:1rem; }
+.section-lead { max-width:650px; text-align:center; margin:0 auto 2rem; opacity:.9; }
+.skills-groups,.journey-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.5rem; max-width:1000px; margin:auto; }
+.skill-group,.journey-card { background:#242e49; border:1px solid #596583; border-radius:13px; padding:1.8rem; }
+.skill-group h3 { margin:0 0 1.2rem; color:#ffb0be; }
+.skill-group h3 .mdi { margin-right:.4rem; }
+.skill-group ul { display:flex; flex-wrap:wrap; gap:.65rem; padding:0; margin:0; list-style:none; }
+.skill-group li,.project-tags span,.small-tag { border:1px solid #7b86a6; border-radius:100px; padding:.35rem .8rem; font-size:.9rem; background:#37415c; }
+.journey-card > .mdi { font-size:2rem; color:#ffb0be; }
+.journey-card h3 { margin:.5rem 0; }
+.small-tag { display:inline-block; margin-top:1rem; }
+.grid-projetos { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.5rem; align-items:stretch; max-width:1100px; margin:auto; }
+#projetos ul li.project { width:100%; max-width:none; display:flex; flex-direction:column; padding:1.2rem; border:1px solid #596583; border-radius:14px; box-shadow:0 8px 28px #13162935; transition:transform .25s ease,border-color .25s ease; }
+#projetos ul li.project:hover { transform:translateY(-5px); border-color:#b8a8ba; }
+#projetos ul li.project > img, #projetos .momentum-preview { height:220px; width:100%; object-fit:cover; border-radius:8px; }
+#projetos .project-description { margin:.65rem 0; text-align:left; opacity:.9; }
+#projetos .project-tags { display:flex; flex-wrap:wrap; gap:.45rem; margin:.5rem 0 1rem; }
+#projetos .project-tags span { font-size:.75rem; padding:.2rem .65rem; }
+#projetos ul li.project > p:last-child { margin-top:auto; }
+#projetos ul li a.git { border:1px solid #596583; border-radius:7px; text-align:center; }
+#projetos ul li a.link { justify-content:flex-start; }
+#projetos ul li a.link h3 { font-size:1.3rem; text-align:left; }
+#projetos ul li a.link small { font-size:.75rem; font-weight:400; }
+.contact-cta { display:flex; width:max-content; margin:0 auto 2rem; }
+#contatos ul li { transition:transform .2s ease; }
+#contatos ul li:hover { transform:translateY(-4px); }
+footer { background:#181a2f; display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:1.5rem clamp(1rem,6vw,5rem); font-size:.9rem; }
+footer a { color:#e4e6ff; }
+@media(max-width:768px) {
+  header { justify-content:flex-end; }
+  .menu-toggle { display:block; }
+  header nav { display:none; position:absolute; top:100%; left:0; right:0; background:#181a2f; padding:1rem; box-shadow:0 12px 25px #0005; }
+  header nav.menu-open { display:block; }
+  header nav ul { flex-direction:column; align-items:center; gap:.9rem; }
+  .skills-groups,.journey-grid,.grid-projetos { grid-template-columns:1fr; }
+  #inicio .inicio-container { text-align:center; }
+  .hero-actions { justify-content:center; }
+  footer { flex-direction:column; text-align:center; }
+}
+@media(prefers-reduced-motion:reduce) {
+  :global(html) { scroll-behavior:auto; }
+  *,*::before,*::after { transition:none !important; animation:none !important; }
+}
+
 </style>
