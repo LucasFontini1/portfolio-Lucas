@@ -1,44 +1,41 @@
-# portfolio-Lucas
+# Portfólio — Lucas Fontini da Luz
 
-This template should help get you started developing with Vue 3 in Vite.
+Portfólio pessoal desenvolvido com **Vue 3**, **Vite** e **GSAP**, com apresentação profissional, competências organizadas, formação no IFC Campus Araquari, projetos e contatos.
 
-## Recommended IDE Setup
+## Projetos em destaque
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- [Rede social institucional](https://rede-social-institucional.surge.sh/) · [Frontend](https://github.com/Hackton2025/front-end)
+- [Robótica IFC](https://robotica-ifc.vercel.app/) · [Documentação](https://github.com/Robotica-IFC/Documentacao-PI)
+- [Games LFR](https://lfr-smoky.vercel.app/) · [Código](https://github.com/LucasFontini1/LFR)
+- [Momentum](https://momentum-sable-seven.vercel.app/) · [Frontend](https://github.com/Hackaton-2026-IFC/Frontend-Hackathon) · [Backend](https://github.com/Hackaton-2026-IFC/Backend-Hackathon)
 
-## Recommended Browser Setup
+## Instalação
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+Requer Node.js compatível com o `package.json`.
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+```bash
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+Para gerar a versão de produção:
 
-```sh
+```bash
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## Organização
 
-```sh
-npm run lint
-```
+- `src/App.vue`: apresentação, formação, tecnologias, projetos e contato.
+- `src/main.js`: inicialização da aplicação.
+- `public/img`: imagens dos projetos e tecnologias.
+- `index.html`: título, idioma e metadados básicos para compartilhamento.
+
+## Personalização pendente
+
+- Substituir a prévia estilizada do **Momentum** por uma captura de tela real do produto quando disponível.
+- Adicionar um PDF de currículo revisado caso queira disponibilizar download direto. Atualmente, o site orienta o visitante a solicitar o currículo por e-mail.
+
+## Acessibilidade
+
+O site inclui navegação por âncoras, menu mobile acessível, estilos de foco visíveis e respeito à preferência de movimento reduzido.
