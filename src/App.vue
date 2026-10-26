@@ -130,18 +130,8 @@ onMounted(() => {
     ease: "power3.out",
   });
 
-  gsap.from("#contatos li", {
-    scrollTrigger: {
-      trigger: "#contatos ul",
-      start: "top 85%",
-      toggleActions: "restart none none reverse",
-    },
-    opacity: 0,
-    y: 100,
-    duration: 0.8,
-    stagger: 0.2,
-    ease: "power2.out",
-  });
+  // Os cartões de contato não recebem translateY de entrada,
+  // para não ultrapassarem o rodapé em telas pequenas.
   });
 });
 onUnmounted(() => gsapContext?.revert());
@@ -788,6 +778,48 @@ footer a { color:#e4e6ff; }
 @media(prefers-reduced-motion:reduce) {
   :global(html) { scroll-behavior:auto; }
   *,*::before,*::after { transition:none !important; animation:none !important; }
+}
+
+
+/* Contatos: fluxo normal impede que os cartões cubram o rodapé no mobile. */
+#contatos {
+  height: auto;
+  min-height: 0;
+  padding-bottom: clamp(5rem, 10vw, 8rem);
+}
+#contatos .section-container {
+  min-width: 0;
+}
+#contatos .grid-contatos {
+  align-items: stretch;
+  margin-bottom: 0;
+}
+#contatos .grid-contatos > li {
+  min-width: 0;
+  position: relative;
+}
+footer {
+  position: relative;
+  z-index: 0;
+  flex-shrink: 0;
+}
+@media (max-width: 599px) {
+  #contatos {
+    padding-top: 4rem;
+    padding-bottom: 5rem;
+  }
+  #contatos .grid-contatos {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  #contatos .grid-contatos > li {
+    padding: 1.2rem;
+    min-height: 88px;
+  }
+  #contatos .grid-contatos > li:hover {
+    transform: none;
+  }
 }
 
 </style>
