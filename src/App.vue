@@ -288,7 +288,8 @@ onUnmounted(() => gsapContext?.revert());
   min-height: 100vh;
   color: #e4e6ff;
   font-family: sans-serif;
-  overflow-x: hidden;
+  /* clip não cria um contêiner de rolagem e mantém o header sticky. */
+  overflow-x: clip;
 }
 
 h2 {
